@@ -1,25 +1,30 @@
 package ru.specialist.building;
 
+import java.util.List;
+import java.util.Map;
+
 import ru.specialist.building.Window;
 
 public class House {
 	
-	private Window window;
+	private List<Window> windows;
 	private Material wall;
 	private int height;
 	
-//	public House() {}
+	private Map<String, Door> doors; // or List[]
 	
-	public House(Window window) {
-		this.window = window;
+	public House() {}
+	
+	public House(List<Window> windows) {
+		this.windows = windows;
 	}
 
-	public Window getWindow() {
-		return window;
+	public List<Window> getWindows() {
+		return windows;
 	}
 
-	public void setWindow(Window window) {
-		this.window = window;
+	public void setWindows(List<Window> windows) {
+		this.windows = windows;
 	}
 	
 	public Material getWall() {
@@ -40,7 +45,7 @@ public class House {
 	
 	
 	public void ventilate() {
-		getWindow().open();
+		getWindows().forEach(w->w.open());
 	}
 	
 	public void buildWall() {
@@ -49,4 +54,23 @@ public class House {
 			wall.buildUp();
 		}
 	}
+	
+	public void installDoors() {
+//		for(var door : getDoors())
+//			door.install();
+		for(Map.Entry<String, Door> e : doors.entrySet()) {
+			System.out.printf("Key : %s. ", e.getKey());
+			e.getValue().install();
+		}
+	}
+
+	public Map<String, Door> getDoors() {
+		return doors;
+	}
+
+	public void setDoors(Map<String, Door> doors) {
+		this.doors = doors;
+	}
+	
+	
 }

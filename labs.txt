@@ -3,3 +3,31 @@
 2. Создайте xml конфигурацию spring с бинов на основе класса Person указав значения свойств name, age
 3. В main создать контекст (ClassPathXmlApplicationContext) получить из него бин Person и напечатать.
 4. Выяснить а) в какой именно момент в main создаётся экземпляр Person б) если несколько раз запрашивать этот бин (getBean) сколько разных экземпляров этого бина нам будут возвращать?
+
+Лабораторная 1.2
+1. Класс Coords
+  	x,y
+   Класс abstract Shape
+  	String color
+   	abstract draw()
+   
+   Класс Point extends Shape
+  	Coords coords
+   	draw();
+   	getX(), getY(), setX(), setY()
+  
+   Класс Circle extends Shape
+    	Coords center, int radius
+    	draw()
+    
+   XML Config Beans: Coords, Point, Circle
+2.    
+   Класс Scene
+     List<Shape> objects
+     
+     1. Inject list to scene (constructor Scene(List<Shape>)) //autowire="constructor"
+     2. draw() // drawing all objects
+     3. Singleton
+
+3. В main
+	getBean(Scene.class).draw()
