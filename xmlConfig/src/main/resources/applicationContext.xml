@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop = "http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util 
+       http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/aop 
+  		http://www.springframework.org/schema/aop/spring-aop.xsd 
+       "
+ >
+	<bean id="woodWindow" class="ru.specialist.building.WoodWindow" />
+	<bean id="plasticWindow" class="ru.specialist.building.PlasticWindow" />
+	<bean id="bricks" class="ru.specialist.building.Brick" />
+	<bean id="logs" class="ru.specialist.building.Wood" />
+	
+	<bean id="myHouse" class="ru.specialist.building.House"
+		p:height="3">
+		<constructor-arg ref="woodWindow" />
+		<property name="wall" ref="logs"/>
+		
+		
+		<!--
+		<property name="window" ref="woodWindow"/> 
+		<property name="height" value="3"/>
+		 -->
+	</bean>
+
+
+</beans>
