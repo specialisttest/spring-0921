@@ -19,19 +19,23 @@
 	<bean id="woodWindow" class="ru.specialist.building.WoodWindow" scope="prototype"/>
 	<bean id="plasticWindow" class="ru.specialist.building.PlasticWindow" />
 	
-	<bean id="bricks" class="ru.specialist.building.Brick" scope="prototype"/>
-	<bean id="logs" class="ru.specialist.building.Wood" />
-	
+	<bean id="bricks" class="ru.specialist.building.Brick" scope="prototype" autowire-candidate="false"/>
+	<bean id="logs" class="ru.specialist.building.Wood" primary="true" />
+	<!-- 
+	<bean id="wall" class="ru.specialist.building.Wood" />
+	 -->
+	 
 	<bean id="outDoor" class="ru.specialist.building.MetalDoor" lazy-init="true"/>
 	<bean id="innerDoor" class="ru.specialist.building.WoodDoor" scope="prototype"/>
 	
 	<context:property-placeholder location="house.properties"/>
 	
 	<bean id="myHouse" class="ru.specialist.building.House"
-		p:height="${house.height}" lazy-init="true">
+		p:height="${house.height}" lazy-init="true" autowire="constructor">
 		
+		<!-- 
 		<property name="wall" ref="logs"/>
-		
+		 -->
 		<property name="doors">
 			<map>
 				<entry key="A" value-ref="outDoor"/>
@@ -62,6 +66,73 @@
 		<property name="height" value="3"/>
 		 -->
 	</bean>
+	
+	<bean id="myHouse2" class="ru.specialist.building.House" lazy-init="true"
+		autowire="byType" p:height="#{new java.util.Random().nextInt(1, 11)}" p:wall="#{bricks}"
+	/>
+	
+	<!-- 
+	<bean id="usa" class="ru.specialist.Country"
+		p:title="USA" p:cities="#{cities.?[population gt 100000]}"
+	/>
+	
+	<util:list id="cities">
+		 <bean class="ru.specialist.City"
+		 	p:name="Chicago" p:state="IL" p:population="2853114"/>
+		 <bean class="ru.specialist.City"
+		 	p:name="Atlanta" p:state="GA" p:population="537958"/>
+		 <bean class="ru.specialist.City"
+		 	p:name="Dallas" p:state="TX" p:population="1279910"/>
+		 <bean class="ru.specialist.City"
+		 	p:name="Houston" p:state="TX" p:population="2242193"/>
+		 <bean class="ru.specialist.City"
+		 	p:name="Odessa" p:state="TX" p:population="90943"/>
+		 <bean class="ru.specialist.City"
+		 	p:name="El Paso" p:state="TX" p:population="613190"/>
+		 <bean class="ru.specialist.City"
+		 	p:name="Jal" p:state="NM" p:population="1996"/>
+		 <bean class="ru.specialist.City"
+	 		p:name="Las Cruces" p:state="NM" p:population="91865"/>
+	</util:list>
+	 -->
+	 <!--  
+	 SpEL - Spring expression language
+	 	value="#{myPoint}"
+	 	value="#{doorShop.createDoor().title}" NPE !!!
+	 	value="#{doorShop.createDoor()?.title?.toUpperCase()}" // Elvis operator 
+	 	value="#{T(java.lang.Math).random()}"
+	 	p:height="#{T(java.lang.Math).random()*10+1}"
+	 	p:height="#{new java.util.Random().nextInt(1, 11)}"
+	 	value="#{new ru.specialist.City()}"
+	 	value="#{2+3*4-5/2 % 10}"
+	 	value="#{ ==  !=  lt gt le ge eq}"
+	 	value="#{ and or not !}"
+	 	value="#{ ? : }"
+	 	value="#{ str != null ? str.toUpperCase() : 'empty' }"
+	 	value="#{ str.toUpperCase() ?: 'empty' }"
+	 	value="#{ admin.email matches '[a-zA-Z]+@[a-zA-Z]+.com' }"
+	 	
+	 	value="#{cities}" // cities collection
+	 	
+	 	value="#{cities[0]}" // City
+	 	value="#{myHouse.doors['A']}" // MetalDoor  myHouse.getDoors().get("A")
 
+		value="#{cities[T(java.lang.Math).random() * cities.size()]}" // Random City from cities collection
+		value="#{cities[new java.util.Random().nextInt( cities.size() ) ]}" // Random City from cities collection
+	 	
+	 	value="#{cities.?[population gt 100000]}" // List<City>
+	 
+ 	 	value="#{cities.^[population gt 100000]}" // City
+	 	value="#{cities.$[population gt 100000]}" // City
+	 	
+	 	value="#{cities.![name]}" // List<String>
+	 	
+	 	value="#{cities.![name + ', ' + state]}" // List<String> 'Chicago, IL' ...
+	 	
+	 	value="#{cities.?[population gt 100000].![name + ', ' + state]}" //List<String> 'Chicago, IL' ...
+	 	
+	-->	
+
+	<import resource="citiesAndCountries.xml"/>
 
 </beans>

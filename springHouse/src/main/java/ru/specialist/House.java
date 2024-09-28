@@ -1,12 +1,14 @@
 package ru.specialist;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class House {
 	
 	private Window window;
 	
 	public House() {}
 	
-	public House(Window window) {
+	public House(/*@Value("#{plasticWindow}")*/ Window window) {
 		this.window = window;
 	}
 
