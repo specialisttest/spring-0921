@@ -3,16 +3,23 @@ package ru.specialist.building;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
+
+import jakarta.annotation.PostConstruct;
 
 @Configuration
 @PropertySource("house.properties")
@@ -20,7 +27,7 @@ import org.springframework.core.env.Environment;
 //@ImportResource("building.xml")
 //@EnableTransactionManagement // transaction support (db)
 //@EnableWebMvc // web mvc support
-public class BuildingConfig {
+public class BuildingConfig{
 	
 	@Bean // id == brick
 	@Scope("prototype")
@@ -71,9 +78,37 @@ public class BuildingConfig {
 	@Autowired
 	private Environment env;
 	
+	@Bean("myHouseDev")
+	@Lazy
+	@Profile({"dev", "test"}) // JVM arguments to activate: -Dspring.profiles.active=dev
+	public House myHouseDev() {
+		House h = new House();
+		
+		h.setHeight(1);
+		
+		h.setDoors(new HashMap<String, Door>());
+		h.getDoors().put("A", metalDoor());
+		
+		final int innerDoorCount = 2;
+		
+		for(int i = 0; i < innerDoorCount; i++)
+			h.getDoors().put( String.valueOf((char)('B'+i)), woodDoor());
+		
+		h.setWindows(new ArrayList<Window>());
+		
+		final int windowCount = 2; env.getProperty("house.windows", Integer.class, 2);
+		for(int i =0 ; i < windowCount; i++)
+			h.getWindows().add(woodWindow());
+		
+		return h;
+	}
+	
+	
 	//@Bean(initMethod = "onCreate") // id == myHouse, scope = singleton, destroyMethod="close" и "shutdown"
 	@Bean
 	@Lazy
+	//@Profile("!dev") // когда НЕ ВКЛЮЧЕН профиль dev
+	@Profile("prod")
 	public House myHouse( @Value("${house.height}") int houseHeight ) {
 		/*logs(); // context.getBean("log", Material.class)
 		logs(); // context.getBean("log", Material.class)
@@ -104,8 +139,5 @@ public class BuildingConfig {
 		
 		return h;
 	}
-	
-	
-	
 
 }
