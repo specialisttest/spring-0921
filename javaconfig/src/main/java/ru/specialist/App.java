@@ -8,14 +8,16 @@ import ru.specialist.building.*;
 
 public class App {
 	public static void main(String[] args) {
-		ApplicationContext context = 
+		try(AnnotationConfigApplicationContext context = 
 				new AnnotationConfigApplicationContext(BuildingConfig.class
-						/*, AnotherConfig.class*/);
+						/*, AnotherConfig.class*/))
+		{
 		
-		House house = context.getBean("myHouse", House.class);
-		house.buildWall();
-		house.installDoors();
-		house.ventilate();
+			House house = context.getBean("myHouse", House.class);
+			house.buildWall();
+			house.installDoors();
+			house.ventilate();
+		} // context.close();
 
 	}
 

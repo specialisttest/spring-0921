@@ -71,7 +71,8 @@ public class BuildingConfig {
 	@Autowired
 	private Environment env;
 	
-	@Bean // id == myHouse
+	//@Bean(initMethod = "onCreate") // id == myHouse, scope = singleton, destroyMethod="close" и "shutdown"
+	@Bean
 	@Lazy
 	public House myHouse( @Value("${house.height}") int houseHeight ) {
 		/*logs(); // context.getBean("log", Material.class)
