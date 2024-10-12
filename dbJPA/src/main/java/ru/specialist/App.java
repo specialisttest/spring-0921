@@ -30,7 +30,11 @@ public class App {
 //			for(Course course : dao.findByTitle("web"))
 				System.out.println(course);
 			
-			System.out.println(dao.findById(4));
+			Course c = dao.findById(4);
+			System.out.println(c);
+			c.setLength(c.getLength()+1);
+			System.out.println(c);
+			dao.update(c);
 			System.out.println(dao.findById(4));
 			
 		}

@@ -27,10 +27,11 @@ public interface CourseDao extends
 //	@Query("SELECT c FROM Course c WHERE c.title LIKE CONCAT('%', :title, '%')") // JPQL
 //	Iterable<Course> findByTitle(@Param("title") String title);	
 	
-	//@Query("SELECT c FROM Course c WHERE c.title LIKE '%' || ?1 || '%' )") // PostgreSQL
 	@Query("SELECT c FROM Course c WHERE c.title LIKE CONCAT('%', ?1 , '%')") // JPQL
 	Iterable<Course> findByTitle(String title);	
 	
+//	@Query(value = "SELECT * FROM courses WHERE title LIKE ('%' || :title || '%')",
+//					nativeQuery = true) // PostgreSQL 
 //	@Query(value = "SELECT * FROM courses WHERE title LIKE CONCAT('%', :title, '%')",
 //				nativeQuery = true) // SQL
 //	Iterable<Course> findByTitle(@Param("title") String title);
