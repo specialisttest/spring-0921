@@ -4,32 +4,34 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import ru.specialist.dao.Course;
 import ru.specialist.dao.CourseDao;
-import ru.specialist.dao.CourseDaoConfig;
+import ru.specialist.dao.DaoConfig;
 
 public class App {
 
 	public static void main(String[] args) {
 		try (AnnotationConfigApplicationContext context = 
-				new AnnotationConfigApplicationContext(CourseDaoConfig.class))
+				new AnnotationConfigApplicationContext(DaoConfig.class))
 		{
 			CourseDao dao = context.getBean(CourseDao.class);
 			
-//			dao.delete(2);
+//			dao.delete(3);
 //			Course webAsp = dao.findById(7);
-//			webAsp.setTitle("Developing web app with ASP.NET Core MVC");
+//			webAsp.setTitle("Developing web app with ASP.NET Core MVC 9.0");
 //			dao.update(webAsp);
 //			Course spring = new Course();
-//			spring.setTitle("Spring. Base");
-//			spring.setLength(40);
-//			spring.setDescription("Intro Spring framework");
+//			spring.setTitle("Pattern OOP");
+//			spring.setLength(24);
+//			spring.setDescription("OOP patterns from GoF");
 //			
 //			dao.insert(spring);
+//			
 			
-			
-			for(Course course : dao.findByTitle("web"))
+			for(Course course : dao.findAll())
+//			for(Course course : dao.findByTitle("web"))
 				System.out.println(course);
 			
-			//System.out.println(dao.findById(2));
+			System.out.println(dao.findById(4));
+			System.out.println(dao.findById(4));
 			
 		}
 

@@ -14,22 +14,23 @@ public class App {
 		{
 			CourseDao dao = context.getBean(CourseDao.class);
 			
-//			dao.delete(2);
+//			dao.delete(1);
 //			Course webAsp = dao.findById(7);
-//			webAsp.setTitle("Developing web app with ASP.NET Core MVC");
+//			webAsp.setTitle("Developing web app with ASP.NET Core MVC 8.0");
 //			dao.update(webAsp);
 //			Course spring = new Course();
-//			spring.setTitle("Spring. Base");
+//			spring.setTitle("Spring Boot. Microservices Arch");
 //			spring.setLength(40);
-//			spring.setDescription("Intro Spring framework");
+//			spring.setDescription("SpringBoot and Microservices");
 //			
 //			dao.insert(spring);
 			
 			
-			for(Course course : dao.findByTitle("web"))
+			for(Course course : dao.findAll())
+//			for(Course course : dao.findByTitle("web"))
 				System.out.println(course);
 			
-			//System.out.println(dao.findById(2));
+//			System.out.println(dao.findById(1));
 			
 		}
 

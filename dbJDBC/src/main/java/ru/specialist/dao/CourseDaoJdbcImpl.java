@@ -78,10 +78,11 @@ public class CourseDaoJdbcImpl implements CourseDao {
 		
 	}
 
+	// lab-41
 	@Override
 	public List<Course> findByTitle(String title) {
-		
-		return null;
+		return getJdbcTemplate().query(SQL_SELECT_COURSE_BY_TITLE, 
+				courseRowMapper, "%"+title+"%");
 	}
 
 	@Override
