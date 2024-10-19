@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Курс</title>
+<style>
+	form fieldset {
+		width : 40%;
+	} 
+	form fieldset label {
+		display : block;
+		/*width : 50%;
+		float :left;*/
+	}
+	form fieldset input, form fieldset textarea {
+		width : 100%;
+	}
+	
+	.error {
+		color : red;
+	}
+</style>
+</head>
+<body>
+	<h1>Курс</h1>
+
+	<h2 class="error" th:text="${error}"></h2>
+
+	<form method="POST">
+		<fieldset>
+			<div>
+				<label>Название: </label>
+				<input  type="text" name="title" th:value="${course?.title}">
+			</div>
+			<div>
+				<label>Длительность: </label>
+				<input  type="number" name="length" th:value="${course?.length}">
+			</div>
+			<div>
+				<label>Описание: </label>
+				<textarea name="description" rows="7" th:text=${course?.description}></textarea>
+			</div>
+			<div>
+				<input type="submit" value="Сохранить">
+			</div>
+		</fieldset>
+	
+	</form>
+
+</body>
+</html>

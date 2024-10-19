@@ -7,6 +7,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
+import ru.specialist.services.HelloService;
+
 @Component("userVM")
 public class UserVM {
 	
@@ -22,23 +24,30 @@ public class UserVM {
 	}
 	
 	
-	public String getHello() {
-		return (getUserName() == null || getUserName().isEmpty()) ? "Привет!" : 
-			String.format("Привет, %s!", getUserName());
-	}	
+//	public String getHello() {
+//		return (getUserName() == null || getUserName().isEmpty()) ? "Привет!" : 
+//			String.format("Привет, %s!", getUserName());
+//	}	
 	
-	/*@Autowired
-	private MessageSource messageSource;
-
+//	@Autowired
+//	private MessageSource messageSource;
+//
+//	public String getHello() {
+//		
+//		String hello = messageSource.getMessage("header_hello", null, Locale.getDefault());
+//		
+//		return (getUserName() == null || getUserName().isEmpty() ? hello :
+//			messageSource.getMessage("header_hello_username", 
+//					new Object[] {getUserName()}, Locale.getDefault()));
+//		
+//	}
+	
+	@Autowired
+	private HelloService helloSrv;
+	
 	public String getHello() {
-		
-		String hello = messageSource.getMessage("header_hello", null, Locale.US);
-		
-		return (getUserName() == null || getUserName().isEmpty() ? hello :
-			messageSource.getMessage("header_hello_username", 
-					new Object[] {getUserName()}, Locale.getDefault()));
-		
-	}*/
+		return helloSrv.getHello(getUserName());
+	}
 	
 	
 }

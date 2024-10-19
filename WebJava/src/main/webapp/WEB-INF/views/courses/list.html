@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Курсы</title>
+</head>
+<body>
+	<h1>Курсы</h1>
+
+		<table border="1">
+			<tr>
+				<th>Название</th>
+				<th>Часы</th>
+				<th>Описание</th>
+				<th></th>
+				<th></th>
+			</tr>
+
+			<tr th:each="course : ${courses}">
+				<td th:text="${course.title}"></td>
+				<td th:text="${course.length}"></td>
+				<td th:text="${course.description}"></td>
+				
+					<td><a th:href="${'update/'+course.id}">Изменить</a></td>
+					<td><a th:href="${'delete/'+course.id}">Удалить</a></td>
+			</tr>
+
+		</table>
+
+		<a href="update/0">Добавить...</a>
+</body>
+</html>

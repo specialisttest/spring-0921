@@ -1,10 +1,14 @@
 package ru.specialist.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
-import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -15,8 +19,22 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"ru.specialist.controllers", "ru.specialist.models"})
+@ComponentScan(basePackages = {"ru.specialist.controllers", "ru.specialist.models", "ru.specialist.services"})
 public class MVCConfig implements WebMvcConfigurer {
+	
+	@Override
+	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+		converters.add(getJacksonHttpMessageConverter());
+	}
+
+    @Bean("jacksonHttpMessageConverter")
+    public MappingJackson2HttpMessageConverter getJacksonHttpMessageConverter() {
+        MappingJackson2HttpMessageConverter converter = 
+        		new MappingJackson2HttpMessageConverter();
+        converter.setPrettyPrint(true);
+        return converter;
+    }
+	
 	
 	// folder for static resources
 	@Override
@@ -28,8 +46,9 @@ public class MVCConfig implements WebMvcConfigurer {
 	
 	@Bean
 	@Description("Spring Message Resolver")
-	public ResourceBundleMessageSource messageSource() {
-	    ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+	public ReloadableResourceBundleMessageSource messageSource() {
+	    //ResourceBundleMessageSource();
+		var messageSource = new ReloadableResourceBundleMessageSource ();
 	    messageSource.setBasename("/WEB-INF/i18n/messages");
 	    messageSource.setDefaultEncoding("UTF-8");
 	    messageSource.setFallbackToSystemLocale(false);

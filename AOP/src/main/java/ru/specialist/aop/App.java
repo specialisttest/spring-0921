@@ -10,10 +10,10 @@ public class App {
 
 	public static void main(String[] args) {
         MessageWriter target = new MessageWriter();
-        //System.out.printf("writeMessage() result: %s\n", 
-        //		target.writeMessage());
-        //target.printMessage();
-        
+        /*System.out.printf("writeMessage() result: %s\n", 
+        		target.writeMessage());
+        target.printMessage();*/
+       
         /*ProxyFactory pf = new ProxyFactory();
         pf.addAdvice(new MessageDecorator());
         pf.setTarget(target);
