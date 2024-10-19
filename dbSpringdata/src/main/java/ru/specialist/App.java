@@ -44,8 +44,12 @@ public class App {
 			Optional<Course> c = dao.findById(44);
 			c.ifPresentOrElse( out::println, ()->out.println("Курс не найден"));
 			
-			out.printf("Average course length: %.2f\n", dao.averageLength());
-			out.printf("Mediana course length: %.2f\n", dao.medianaLength());
+//			out.printf("Average course length: %.2f\n", dao.averageLength());
+//			out.printf("Mediana course length: %.2f\n", dao.medianaLength());
+			var r = dao.getAverageAndMedianaLength();
+			out.printf("Average course length: %.2f\n", r.average());
+			out.printf("Mediana course length: %.2f\n", r.mediana());
+			
 			
 //			System.out.println(dao.findById(4));
 			

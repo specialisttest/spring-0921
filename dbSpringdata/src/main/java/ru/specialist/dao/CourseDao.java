@@ -4,12 +4,16 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public interface CourseDao extends 
 	CrudRepository<Course, Integer>,
 	CourseDaoCustomized
+	//PagingAndSortingRepository<Course, Integer>
+	
 {
 	
 	// Методы запросов из имени метода
@@ -42,6 +46,8 @@ public interface CourseDao extends
 	int changeCourseLength(@Param("oLength") int oldLength, 
 			@Param("nLength") int newLength);
 	
+	@Transactional(isolation = Isolation.READ_COMMITTED, 
+			propagation = Propagation.REQUIRED, readOnly =  true)
 	@Query("SELECT AVG(c.length) FROM Course c")
 	double averageLength();
 	

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Hello page</title>
+<style>
+	form fieldset {
+		width : 40%;
+	} 
+	form fieldset label {
+		display : block;
+		/*width : 50%;
+		float :left;*/
+	}
+	form fieldset input, form fieldset textarea {
+		width : 100%;
+	}
+</style>
+</head>
+<body>
+	<h1 th:text="${user.hello}">Привет!</h1>
+	<form method="POST" action="hello">
+		<fieldset>
+			<div>
+				<label>Ваше имя: </label>
+				<input  type="text" name="userName" th:value="${user.userName}">
+			</div>
+			<div>
+				<input type="submit" value="Привет!">
+			</div>
+		</fieldset>
+	
+	</form>
+	<footer th:text="#{copyright}"></footer>
+</body>
+</html>
